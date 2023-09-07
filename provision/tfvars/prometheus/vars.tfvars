@@ -17,3 +17,5 @@ tags         = ["gke-node", "sales-209522-gke"]
 version_prefix = "1.27."
 
 gke_num_nodes = 1
+
+store_credentials_harness = false
