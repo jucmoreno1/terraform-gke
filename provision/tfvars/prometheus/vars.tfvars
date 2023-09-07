@@ -18,4 +18,4 @@ version_prefix = "1.27."
 
 gke_num_nodes = 1
 
-store_credentials_harness = false
+store_credentials_harness = true
