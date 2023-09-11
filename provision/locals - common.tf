@@ -1,13 +1,10 @@
 locals {
-  secrets = var.store_credentials_harness ? {
+  secrets = var.enable_harness_k8s_connector ? {
     "${var.cluster_name}_cluster_ca_certificate" = base64decode(google_container_cluster.primary.master_auth.0.cluster_ca_certificate)
     "${var.cluster_name}_service_account_token"  = lookup(kubernetes_secret_v1.sa.0.data, "token")
   } : {}
 
-
-
-
-  cluster = var.store_credentials_harness ? {
+  k8s_connector = var.enable_harness_k8s_connector ? {
     "${var.cluster_name}" = {
       description        = "terraform generated k8s connector"
       tags               = []
@@ -22,6 +19,17 @@ locals {
       }
       username_password     = {}
       inherit_from_delegate = {}
+    }
+  } : {}
+
+  ccm_connector = var.enable_harness_ccm_connector ? {
+    "${var.cluster_name}" = {
+      description        = "terraform generated k8s connector"
+      tags               = []
+      project_id         = ""
+      org_id             = ""
+      delegate_selectors = []
+      features_enabled   = ["VISIBILITY"]
     }
   } : {}
 }

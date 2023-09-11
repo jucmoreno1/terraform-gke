@@ -5,7 +5,7 @@ provider "kubernetes" {
 }
 
 resource "kubernetes_service_account_v1" "sa" {
-  count = var.store_credentials_harness ? 1 : 0
+  count = var.enable_harness_k8s_connector ? 1 : 0
   metadata {
     name      = "harness-service-account"
     namespace = "default"
@@ -13,7 +13,7 @@ resource "kubernetes_service_account_v1" "sa" {
 }
 
 resource "kubernetes_cluster_role_binding" "sa" {
-  count = var.store_credentials_harness ? 1 : 0
+  count = var.enable_harness_k8s_connector ? 1 : 0
   metadata {
     name = "harness-admin"
   }
@@ -30,7 +30,7 @@ resource "kubernetes_cluster_role_binding" "sa" {
 }
 
 resource "kubernetes_secret_v1" "sa" {
-  count = var.store_credentials_harness ? 1 : 0
+  count = var.enable_harness_k8s_connector ? 1 : 0
   metadata {
     name = "harness-service-account-token"
     annotations = {
@@ -39,17 +39,3 @@ resource "kubernetes_secret_v1" "sa" {
   }
   type = "kubernetes.io/service-account-token"
 }
-
-/* resource "kubernetes_token_request_v1" "sa" {
-  count = var.store_credentials_harness ? 1 : 0
-  metadata {
-    name      = kubernetes_service_account_v1.sa.0.metadata.0.name
-    namespace = "default"
-  }
-  spec {
-    expiration_seconds = 3600
-    audiences = [
-      "api"
-    ]
-  }
-} */

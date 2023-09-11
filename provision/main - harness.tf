@@ -11,7 +11,7 @@ resource "harness_platform_secret_text" "inline" {
 }
 
 resource "harness_platform_connector_kubernetes" "connector" {
-  for_each           = local.cluster
+  for_each           = local.k8s_connector
   identifier         = lower(replace(each.key, "/[\\s-.]/", "_"))
   name               = each.key
   description        = each.value.description
@@ -43,4 +43,16 @@ resource "harness_platform_connector_kubernetes" "connector" {
       delegate_selectors = inherit_from_delegate.value.delegate_selectors
     }
   }
+}
+
+resource "harness_platform_connector_kubernetes_cloud_cost" "connector" {
+  for_each         = local.ccm_connector
+  identifier       = "${lower(replace(each.key, "/[\\s-.]/", "_"))}_cost_access"
+  name             = "${each.key}-cost-access"
+  description      = each.value.description
+  tags             = each.value.tags
+  project_id       = each.value.project_id
+  org_id           = each.value.org_id
+  features_enabled = each.value.features_enabled
+  connector_ref    = harness_platform_connector_kubernetes.connector[each.key].identifier
 }

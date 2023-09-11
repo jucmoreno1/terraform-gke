@@ -23,7 +23,12 @@ variable "gke_num_nodes" {
   description = "number of gke nodes"
 }
 
-variable "store_credentials_harness" {
+variable "enable_harness_k8s_connector" {
+  description = "number of gke nodes"
+  default     = true
+}
+
+variable "enable_harness_ccm_connector" {
   description = "number of gke nodes"
   default     = true
 }

@@ -18,4 +18,5 @@ version_prefix = "1.27."
 
 gke_num_nodes = 1
 
-store_credentials_harness = true
+enable_harness_k8s_connector = true
+enable_harness_ccm_connector = true
