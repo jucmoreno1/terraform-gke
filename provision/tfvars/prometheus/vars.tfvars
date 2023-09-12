@@ -1,22 +1,20 @@
-# Copyright (c) HashiCorp, Inc.
-# SPDX-License-Identifier: MPL-2.0
+gcp_project_id      = "sales-209522"
+gcp_region          = "us-central1"
+gcp_machine_type    = "n2-standard-2"
+gcp_service_account = "sales-demo-admin@sales-209522.iam.gserviceaccount.com"
+gcp_network         = "default"
+gcp_subnetwork      = "default"
 
-project_id   = "sales-209522"
-region       = "us-central1"
-cluster_name = "se-latam-prometheus-pov"
-
-cluster_labels = {
+gke_cluster_name   = "se-latam-prometheus-pov"
+gke_version_prefix = "1.27."
+gke_num_nodes      = 1
+gke_cluster_labels = {
   owner   = "cristian-ramirez"
   scope   = "internal-labs"
   purpose = "customer-pov-labs"
 }
 
-machine_type = "n1-standard-2"
-tags         = ["gke-node", "sales-209522-gke"]
-
-version_prefix = "1.27."
-
-gke_num_nodes = 1
+tags = ["gke-node", "sales-209522-gke"]
 
 enable_harness_k8s_connector = true
 enable_harness_ccm_connector = true

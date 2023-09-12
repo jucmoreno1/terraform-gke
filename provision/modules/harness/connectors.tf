@@ -1,17 +1,6 @@
-resource "harness_platform_secret_text" "inline" {
-  for_each    = local.secrets
-  identifier  = lower(replace(each.key, "/[\\s-.]/", "_"))
-  name        = each.key
-  description = "kubernetes secret"
-  tags        = []
-
-  secret_manager_identifier = "account.harnessSecretManager"
-  value_type                = "Inline"
-  value                     = each.value
-}
-
 resource "harness_platform_connector_kubernetes" "connector" {
-  for_each           = local.k8s_connector
+  depends_on         = [harness_platform_secret_text.inline]
+  for_each           = var.kubernetes_connector
   identifier         = lower(replace(each.key, "/[\\s-.]/", "_"))
   name               = each.key
   description        = each.value.description
@@ -24,7 +13,7 @@ resource "harness_platform_connector_kubernetes" "connector" {
     for_each = each.value.service_account
     content {
       master_url                = service_account.value.master_url
-      service_account_token_ref = service_account.value.service_account_token_ref
+      service_account_token_ref = "account.${harness_platform_secret_text.inline[service_account.value.service_account_token_ref].identifier}"
     }
   }
 
@@ -46,7 +35,8 @@ resource "harness_platform_connector_kubernetes" "connector" {
 }
 
 resource "harness_platform_connector_kubernetes_cloud_cost" "connector" {
-  for_each         = local.ccm_connector
+  depends_on       = [harness_platform_connector_kubernetes.connector]
+  for_each         = var.kubernetes_ccm_connector
   identifier       = "${lower(replace(each.key, "/[\\s-.]/", "_"))}_cost_access"
   name             = "${each.key}-cost-access"
   description      = each.value.description
