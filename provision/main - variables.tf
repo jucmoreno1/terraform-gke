@@ -1,22 +1,43 @@
-variable "gcp_project_id" {}
-variable "gcp_region" {}
-variable "gcp_machine_type" {}
-variable "gcp_service_account" {}
-variable "gcp_network" {}
-variable "gcp_subnetwork" {}
-
-variable "gke_cluster_name" {}
-variable "gke_cluster_labels" {}
-variable "gke_version_prefix" {}
-variable "gke_num_nodes" {
-  description = "number of gke nodes"
+variable "gcp_project_id" {
+  default = "sales-209522"
+}
+variable "gcp_region" {
+  default = "us-central1"
+}
+variable "gcp_machine_type" {
+  default = "n1-standard-2"
+}
+variable "gcp_service_account" {
+  default = "sales-demo-admin@sales-209522.iam.gserviceaccount.com"
+}
+variable "gcp_network" {
+  default = "default"
+}
+variable "gcp_subnetwork" {
+  default = "default"
 }
 
-variable "tags" {}
+variable "gke_cluster_name" {}
+variable "gke_cluster_labels" {
+  default = {
+    owner   = "cristian-ramirez"
+    scope   = "workshop"
+    purpose = "demo"
+  }
+}
+variable "gke_version_prefix" {
+  default = "1.27."
+}
+variable "gke_num_nodes" {
+  description = "number of gke nodes"
+  default     = 2
+}
+variable "tags" {
+  default = ["gke-node", "sales-209522-gke"]
+}
 variable "enable_harness_k8s_connector" {
   default = true
 }
 variable "enable_harness_ccm_connector" {
   default = true
 }
-
