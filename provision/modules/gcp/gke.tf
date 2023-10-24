@@ -11,8 +11,9 @@ data "google_container_engine_versions" "gke_version" {
 }
 
 resource "google_container_cluster" "primary" {
-  name     = var.gke_cluster_name
-  location = var.gcp_region
+  name                = var.gke_cluster_name
+  location            = var.gcp_region
+  deletion_protection = false
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
