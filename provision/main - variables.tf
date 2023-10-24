@@ -5,7 +5,7 @@ variable "gcp_region" {
   default = "us-central1"
 }
 variable "gcp_machine_type" {
-  gcp_machine_type = "n1-standard-2"
+  default = "n1-standard-2"
 }
 variable "gcp_service_account" {
   default = "sales-demo-admin@sales-209522.iam.gserviceaccount.com"
