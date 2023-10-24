@@ -1,5 +1,14 @@
 terraform {
-  backend "gcs" {}
+
+  backend "http" {
+    address = "https://app.harness.io/gateway/iacm/api/orgs/default/projects/Cristian_Labs_Manual_Setup/workspaces/GKE_Cristian_Workshop/terraform-backend?accountIdentifier=Io9SR1H7TtGBq9LVyJVB2w"
+    username = "harness"
+    lock_address = "https://app.harness.io/gateway/iacm/api/orgs/default/projects/Cristian_Labs_Manual_Setup/workspaces/GKE_Cristian_Workshop/terraform-backend/lock?accountIdentifier=Io9SR1H7TtGBq9LVyJVB2w"
+    lock_method = "POST"
+    unlock_address = "https://app.harness.io/gateway/iacm/api/orgs/default/projects/Cristian_Labs_Manual_Setup/workspaces/GKE_Cristian_Workshop/terraform-backend/lock?accountIdentifier=Io9SR1H7TtGBq9LVyJVB2w"
+    unlock_method = "DELETE"
+  }
+
   required_providers {
     google = {
       source = "hashicorp/google"
